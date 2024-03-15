@@ -2,6 +2,10 @@
 
 ## Requirements
 
+3.2.1 Code Tokens. As we can see from Figure 2, the first part of the input is the code token sequence of a method. We use a lexical analyzer to tokenize the source code and then obtain the tokens𝐶 = {𝑐1,𝑐2,...,𝑐𝑙},where𝑙 isthenumberofcodetokens. Specifically, we use the Python standard library3 to tokenize Python codes.
+
+3 https://docs.python.org/3.8/library/tokenize.html
+
 ### Minimize requirements
 
 The list of minimize requirements can be found in `requirements.txt`.
