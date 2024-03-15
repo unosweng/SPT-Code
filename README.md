@@ -5,6 +5,32 @@
 3.2.1 Code Tokens. As we can see from Figure 2, the first part of the input is the code token sequence of a method. We use a lexical analyzer to tokenize the source code and then obtain the tokens𝐶 = {𝑐1,𝑐2,...,𝑐𝑙},where𝑙 isthenumberofcodetokens. Specifically, we use the Python standard library3 to tokenize Python codes.
 
 3 https://docs.python.org/3.8/library/tokenize.html
+`python 3.8`
+
+conda remove -n spt-code --all
+conda create -n spt-code python==3.8.17
+
+pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+python -m pip install transformers
+conda install --yes --file requirements.txt
+--
+requirements.txt
+	nltk
+	tqdm
+	psutil
+	scikit-learn
+	prettytable
+	numpy
+	dataclasses
+	chardet
+--
+pip install rouge==1.0.0
+pip install accelerate
+pip install typing
+
+conda list -n spt-code
+
 
 ### Minimize requirements
 
