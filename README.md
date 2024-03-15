@@ -30,9 +30,14 @@ requirements.txt
 pip install rouge==1.0.0
 pip install accelerate
 pip install typing
+pip install antlr4-tools
 
 conda list -n spt-code
 ```
+
+``
+https://github.com/microsoft/CodeBERT/blob/c0de43d3aaf38e89290f1efb771f8de845e7a489/GraphCodeBERT/translation/parser/my-languages.so
+``
 
 ### Minimize requirements
 
@@ -89,6 +94,15 @@ python main.py \
 --batch-size 64 \
 --eval-batch-size 64 \
 --cuda-visible-devices 0,1,2,3 \
+--fp16 \
+--model-name pre_train
+
+python main.py \
+--do-pre-train \
+--pre-train-tasks cap,mass,mng \
+--batch-size 64 \
+--eval-batch-size 64 \
+--cuda-visible-devices 0 \
 --fp16 \
 --model-name pre_train
 
