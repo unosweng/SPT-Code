@@ -95,7 +95,11 @@ The dataset loading code is located in the `sources/data/data.py` and `sources/d
 
 ##  Pre-trained Tokenizers and Models
 
-Custom tokenizers (we call "vocab") can be downloaded here: ([OneDrive](https://1drv.ms/u/s!Aj4XBdlu8BS0geoV78e2KLC41sfasw?e=kfukTw), [iCloud](https://www.icloud.com.cn/iclouddrive/033gKQZigREGSYzRef-2yP6Bg#pre%5Ftrained), [Google Drive](https://drive.google.com/file/d/1PhVf5u8_uq5Tsl-OIvOGpqjA2y7D-9Dr/view?usp=sharing)). Extract it in a certain directory. 
+Custom tokenizers (we call "vocab") can be downloaded here: ([OneDrive](https://1drv.ms/u/s!Aj4XBdlu8BS0geoV78e2KLC41sfasw?e=kfukTw), [iCloud](https://www.icloud.com.cn/iclouddrive/033gKQZigREGSYzRef-2yP6Bg#pre%5Ftrained), [Google Drive](https://drive.google.com/file/d/1PhVf5u8_uq5Tsl-OIvOGpqjA2y7D-9Dr/view?usp=sharing)). 
+```
+gdown https://drive.google.com/uc?id=ID where ID is 1PhVf5u8_uq5Tsl-OIvOGpqjA2y7D-9Dr
+```
+Extract it in a certain directory. 
 Specific the argument `trained_vocab` of `main.py` 
 where the tokenizers are located or put it in `{dataset_root}/vocab_saved` (default to`.../dataset/vocab_saved`).
 

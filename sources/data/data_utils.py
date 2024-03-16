@@ -337,6 +337,8 @@ def load_dataset_from_dir(dataset_dir):
 
     if not os.path.exists(dataset_dir):
         logger.info('-' * 100)
+        full_path_dataset_dir = os.path.abspath(dataset_dir)
+        check_exist = os.path.exists(full_path_dataset_dir)
         logger.info('Directory Not Exist: %s', dataset_dir)
         logger.info('-' * 100)
         sys.exit()

@@ -351,6 +351,7 @@ class Vocab(object):
             item = item.lower()
         return True if self.tokenizer.token_to_id(item) else False
 
+import sys
 
 def load_vocab(vocab_root, name) -> Vocab:
     """
@@ -364,6 +365,13 @@ def load_vocab(vocab_root, name) -> Vocab:
         Vocab: Loaded vocab instance
 
     """
+    vocab_full_path = os.path.abspath(os.path.join(vocab_root, name, '{}.pk'.format(name)))
+    if not os.path.exists(vocab_full_path):
+        logger.info('-' * 100)
+        logger.info('Not Exist: %s', vocab_full_path)
+        logger.info('-' * 100)
+        sys.exit        
+
     with open(os.path.join(vocab_root, name, '{}.pk'.format(name)), mode='rb') as f:
         obj = pickle.load(f)
     assert isinstance(obj, Vocab)
