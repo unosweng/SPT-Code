@@ -57,6 +57,28 @@ Besides, `antlr4` need to be installed,
 If you encounter errors about `my-languages.so` when preprocessing the dataset, 
 please run `sources/data/asts/build_lib.py` first.
 
+```
+git clone https://github.com/tree-sitter/tree-sitter-javascript
+git clone https://github.com/tree-sitter/tree-sitter-java
+git clone https://github.com/tree-sitter/tree-sitter-python
+git clone https://github.com/tree-sitter/tree-sitter-php
+git clone https://github.com/tree-sitter/tree-sitter-ruby
+git clone https://github.com/tree-sitter/tree-sitter-c-sharp
+python build_lib.py # See https://github.com/tree-sitter/py-tree-sitter/blob/master/README.md
+```
+
+For php
+```
+cd data/asts/vendor/tree-sitter-php
+cp -r php/src .
+```
+Update a file to fix a compile error.
+```
+< #include "../common/scanner.h"
+---
+> #include "../../common/scanner.h"
+```
+
 ## Datasets and Tokenizers
 
 We provide pre-processed datasets, saved as pickle binary files, 
