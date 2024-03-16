@@ -134,3 +134,11 @@ dmypy.json
 # outputs dir
 outputs/
 pre_trained/
+
+# tree-sitter
+sources/data/asts/vendor/tree-sitter-c-sharp
+sources/data/asts/vendor/tree-sitter-java
+sources/data/asts/vendor/tree-sitter-javascript
+sources/data/asts/vendor/tree-sitter-php
+sources/data/asts/vendor/tree-sitter-python
+sources/data/asts/vendor/tree-sitter-ruby
