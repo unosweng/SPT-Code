@@ -2,7 +2,7 @@ import re
 import tokenize
 from io import StringIO
 import json
-import os
+import os, sys
 import logging
 from tqdm import tqdm
 from antlr4 import InputStream
@@ -334,6 +334,13 @@ def load_dataset_from_dir(dataset_dir):
     all_names_wo_name = []
     all_only_names = []
     all_docs = []
+
+    if not os.path.exists(dataset_dir):
+        logger.info('-' * 100)
+        logger.info('Directory Not Exist: %s', dataset_dir)
+        logger.info('-' * 100)
+        sys.exit()
+
     for file in os.listdir(dataset_dir):
 
         path = os.path.join(dataset_dir, file)
