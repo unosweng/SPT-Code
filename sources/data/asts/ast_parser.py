@@ -237,6 +237,7 @@ def split_identifier(identifier):
 
     return words
 
+import sys
 
 def parse_ast(source, lang):
     """
@@ -253,6 +254,7 @@ def parse_ast(source, lang):
         parser.set_language(LANGUAGE[lang])
     except Exception as err:
         print(f'[ERR]: {err}')
+        sys.exit(0)
 
     if lang in SOURCE_PREFIX_POSTFIX:
         source = SOURCE_PREFIX_POSTFIX[lang][0] + source + SOURCE_PREFIX_POSTFIX[lang][1]
