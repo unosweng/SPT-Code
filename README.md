@@ -85,6 +85,54 @@ Fixed an error on tree-sitter due to the incompatible version between 'tree-sitt
 pip install --upgrade tree-sitter
 ```
 
+## Directory Structure with Code and Data
+
+```
+myoungkyu@oisit-selab2 √ ~/Documents/0-research-spt-code $ tree -L 2 .
+.
+├── dataset
+│   ├── dataset_saved
+│   ├── dataset_saved_org
+│   ├── fine_tune_org
+│   ├── pre_train
+│   └── vocab_saved
+├── pre_trained.zip
+└── spt-code
+    ├── git-proc-macos.sh
+    ├── git-proc.sh
+    ├── LICENSE
+    ├── Makefile
+    ├── outputs
+    ├── pre_trained
+    ├── README.md
+    ├── requirements-org.txt
+    ├── requirements.txt
+    └── sources
+```
+
+```
+myoungkyu@oisit-selab2 √ ~/Documents/0-research-spt-code $ tree -L 4 -D spt-code/pre_trained/
+[Aug 27  2021]  spt-code/pre_trained/
+├── [Aug 27  2021]  models
+│   └── [Aug 27  2021]  all
+│       ├── [Aug  1  2021]  config.json
+│       ├── [Aug  1  2021]  pytorch_model.bin
+│       └── [Aug  1  2021]  training_args.bin
+└── [Aug 27  2021]  vocabs
+    ├── [Aug 27  2021]  ast
+    │   └── [Aug  1  2021]  ast.pk
+    ├── [Aug 27  2021]  code
+    │   └── [Aug  1  2021]  code.pk
+    └── [Aug 27  2021]  nl
+        └── [Aug  1  2021]  nl.pk
+```
+
+```
+myoungkyu@oisit-selab2 √ ~/Documents/0-research-spt-code $ tree -D -t dataset/*saved
+[Mar 17 00:24]  dataset/dataset_saved
+└── [Mar 17 00:24]  pre_train.pk
+```
+
 ## Datasets and Tokenizers
 
 We provide pre-processed datasets, saved as pickle binary files, 
