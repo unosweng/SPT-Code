@@ -31,6 +31,7 @@ pip install rouge==1.0.0
 pip install accelerate
 pip install typing
 pip install antlr4-tools
+conda install -c conda-forge tensorboard
 
 conda list -n spt-code
 ```
@@ -77,6 +78,11 @@ Update a file to fix a compile error.
 < #include "../common/scanner.h"
 ---
 > #include "../../common/scanner.h"
+```
+
+Fixed an error on tree-sitter due to the incompatible version between 'tree-sitter' and 'tree-sitter-python'. (The error occurred at `parser.set_language(LANGUAGE[lang])` in a function `parse_ast` in `ast_parser.py`. A test file `test_ast_parser.py` has been used to fix this bug.)
+```
+pip install --upgrade tree-sitter
 ```
 
 ## Datasets and Tokenizers

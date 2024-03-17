@@ -249,7 +249,11 @@ def parse_ast(source, lang):
         tree_sitter.Node: Method/Function root node
 
     """
-    parser.set_language(LANGUAGE[lang])
+    try:
+        parser.set_language(LANGUAGE[lang])
+    except Exception as err:
+        print(f'[ERR]: {err}')
+
     if lang in SOURCE_PREFIX_POSTFIX:
         source = SOURCE_PREFIX_POSTFIX[lang][0] + source + SOURCE_PREFIX_POSTFIX[lang][1]
     tree = parser.parse(source.encode('utf-8').decode('unicode_escape').encode())
