@@ -5,3 +5,4 @@ scikit-learn
 prettytable
 numpy
 dataclasses
+chardet

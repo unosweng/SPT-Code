@@ -139,6 +139,7 @@ outputs/
 pre_trained/
 
 # tree-sitter
+sources/data/asts/vendor/tree-sitter-go
 sources/data/asts/vendor/tree-sitter-c-sharp
 sources/data/asts/vendor/tree-sitter-java
 sources/data/asts/vendor/tree-sitter-javascript
