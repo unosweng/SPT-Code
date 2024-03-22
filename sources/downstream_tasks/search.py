@@ -315,6 +315,18 @@ def run_search(
                     break
 
             model.eval()
+
+            # ###############################################################################
+            # Added this code to reduce the testing time, myoungkyu song, 03/22/2024.
+            if args.train_subset_ratio and 'valid' in datasets:
+                org_dataset_sz = len(datasets['valid'])
+                datasets['valid'] = datasets['valid'].subset(args.train_subset_ratio)
+                logger.info(f'The valid is trimmed to subset due to the argument: train_subset_ratio={args.train_subset_ratio}')
+                logger.info('The size of trimmed valid set: {}'.format(len(datasets['train'])))
+                logger.info('The size of original valid set: {}'.format(org_dataset_sz))
+
+            # ###############################################################################
+
             logger.info(" ")
             logger.info("***** Running evaluation *****")
             logger.info("  Num queries = %d", len(datasets['valid']))
