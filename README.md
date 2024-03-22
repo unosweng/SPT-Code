@@ -13,6 +13,8 @@ conda remove -n spt-code --all
 conda create -n spt-code python==3.8.17
 
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+(MAC OS)
+pip3 install torch torchvision torchaudio
 
 python -m pip install transformers
 conda install --yes --file requirements.txt
@@ -52,6 +54,12 @@ then you will also need to install the following packages.
 tree_sitter==0.19.0
 antlr4-python3-runtime==4.9.2
 ```
+```
+pip install tree_sitter==0.19.0
+pip install --upgrade tree-sitter
+pip install antlr4-python3-runtime==4.9.2
+```
+
 Besides, `antlr4` need to be installed,
 [installation guidance here](https://github.com/antlr/antlr4/blob/master/doc/getting-started.md).
 
@@ -59,6 +67,7 @@ If you encounter errors about `my-languages.so` when preprocessing the dataset,
 please run `sources/data/asts/build_lib.py` first.
 
 ```
+git clone https://github.com/tree-sitter/tree-sitter-go
 git clone https://github.com/tree-sitter/tree-sitter-javascript
 git clone https://github.com/tree-sitter/tree-sitter-java
 git clone https://github.com/tree-sitter/tree-sitter-python
@@ -67,16 +76,26 @@ git clone https://github.com/tree-sitter/tree-sitter-ruby
 git clone https://github.com/tree-sitter/tree-sitter-c-sharp
 python build_lib.py # See https://github.com/tree-sitter/py-tree-sitter/blob/master/README.md
 ```
-
-For php
+Fix two errors below.
+(1) Fix the 1st error in php below.
 ```
+(spt-code) √ asts % python build_lib.py       
+FileNotFoundError: [Errno 2] No such file or directory: 'vendor/tree-sitter-php/src/parser.c'
+
 cd data/asts/vendor/tree-sitter-php
 cp -r php/src .
 ```
-Update a file to fix a compile error.
+(2) Fix the 2nd error in php below.
 ```
+vendor/tree-sitter-php/src/scanner.c:1:10: fatal error: '../../common/scanner.h' file not found
+#include "../../common/scanner.h"
+         ^~~~~~~~~~~~~~~~~~~~~~~~
+
+Edit the file scanner.c as follows.
+(New)
 < #include "../common/scanner.h"
 ---
+(Old)
 > #include "../../common/scanner.h"
 ```
 
