@@ -65,6 +65,11 @@ class RuntimeArguments:
         metadata={'help': 'Number of data iterations for training'}
     )
 
+    n_epoch_pre_train: int = field(
+        default=30,
+        metadata={'help': 'Number of data iterations for pre training, particularly testing purpose'}
+    )
+
     batch_size: int = field(
         default=16,
         metadata={'help': 'Batch size for training on each device'}
