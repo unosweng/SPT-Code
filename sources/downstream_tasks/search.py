@@ -60,12 +60,16 @@ def run_search(
                                        split=split)
         logger.info(f'The size of {split} set: {len(datasets[split])}')
 
+    # ###############################################################################
+    # Added this code to reduce the testing time, myoungkyu song, 03/22/2024.
     if args.train_subset_ratio and 'train' in datasets:
         org_dataset_sz = len(datasets['train'])
         datasets['train'] = datasets['train'].subset(args.train_subset_ratio)
         logger.info(f'The train is trimmed to subset due to the argument: train_subset_ratio={args.train_subset_ratio}')
         logger.info('The size of trimmed train set: {}'.format(len(datasets['train'])))
         logger.info('The size of original train set: {}'.format(org_dataset_sz))
+
+    # ###############################################################################
 
     codebase_dataloader = DataLoader(dataset=datasets['codebase'],
                                      batch_size=args.eval_batch_size,
@@ -311,6 +315,7 @@ def run_search(
                     break
 
             model.eval()
+            logger.info(" ")
             logger.info("***** Running evaluation *****")
             logger.info("  Num queries = %d", len(datasets['valid']))
             logger.info("  Num codes = %d", len(datasets['codebase']))
