@@ -59,6 +59,14 @@ def run_search(
                                        language=args.search_language,
                                        split=split)
         logger.info(f'The size of {split} set: {len(datasets[split])}')
+
+    if args.train_subset_ratio and 'train' in datasets:
+        org_dataset_sz = len(datasets['train'])
+        datasets['train'] = datasets['train'].subset(args.train_subset_ratio)
+        logger.info(f'The train is trimmed to subset due to the argument: train_subset_ratio={args.train_subset_ratio}')
+        logger.info('The size of trimmed train set: {}'.format(len(datasets['train'])))
+        logger.info('The size of original train set: {}'.format(org_dataset_sz))
+
     codebase_dataloader = DataLoader(dataset=datasets['codebase'],
                                      batch_size=args.eval_batch_size,
                                      collate_fn=lambda batch: collate_fn(batch,
