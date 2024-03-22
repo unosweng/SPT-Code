@@ -1,0 +1,24 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File with Arguments",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/spt-code/sources/main.py",
+            "console": "integratedTerminal",
+            "args": "--do-pre-train --pre-train-tasks mass --batch-size 16 --eval-batch-size 16 --cuda-visible-devices 0 --fp16 --model-name pre_train --pre-train-subset-ratio 0.001 --n-epoch 1 --n-epoch-pre-train 1",
+            // --n-epoch-pre-train was added to reduce running time.
+            "cwd": "${workspaceFolder}/spt-code/sources"
+        },
+        {
+            "name": "Python Debugger: Python File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}"
+        }
+    ]
+}

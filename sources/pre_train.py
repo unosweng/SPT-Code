@@ -205,6 +205,10 @@ def pre_train(args,
             trainer.save_model(os.path.join(args.model_root, task))
 
         elif task == enums.TASK_MASS:
+
+            if args.n_epoch_pre_train != 30:
+                print(f'n_epoch_pre_train is updated to {args.n_epoch_pre_train}')
+
             # set model mode
             logger.info('-' * 100)
             model.set_model_mode(enums.MODEL_MODE_GEN)
@@ -221,7 +225,7 @@ def pre_train(args,
                                                      learning_rate=args.learning_rate,
                                                      weight_decay=args.lr_decay_rate,
                                                      max_grad_norm=args.grad_clipping_norm,
-                                                     num_train_epochs=30,
+                                                     num_train_epochs=args.n_epoch_pre_train,
                                                      lr_scheduler_type=SchedulerType.LINEAR,
                                                      warmup_steps=args.warmup_steps,
                                                      logging_dir=os.path.join(args.tensor_board_root, task),
