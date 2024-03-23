@@ -146,3 +146,9 @@ sources/data/asts/vendor/tree-sitter-javascript
 sources/data/asts/vendor/tree-sitter-php
 sources/data/asts/vendor/tree-sitter-python
 sources/data/asts/vendor/tree-sitter-ruby
+
+# csv
+*.csv
+
+# torch saving file
+*.pt
