@@ -102,6 +102,12 @@ class RuntimeArguments:
                   'help': 'Whether to use mixed precision'}
     )
 
+    remove_existing_saved_file: str = field(
+        default='../../dataset/dataset_saved/pre_train.pk',
+        metadata={'action': 'store_true',
+            'help': 'Whether to remove an existing saved file'}
+    )
+
 
 @dataclass
 class DatasetArguments:
@@ -120,6 +126,11 @@ class DatasetArguments:
     pre_train_subset_ratio: float = field(
         default=None,
         metadata={'help': 'Ratio of pre-train subset'}
+    )
+
+    pre_train_parse_subset_ratio: float = field(
+        default=None,
+        metadata={'help': 'Ratio of pre-train subset to parse'}
     )
 
 

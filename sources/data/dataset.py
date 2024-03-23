@@ -8,7 +8,7 @@ import pickle
 import random
 
 import enums
-from .data_utils import load_dataset_from_dir, \
+from .data_utils import load_dataset_from_dir, set_args, \
     parse_for_summarization, parse_for_translation, parse_for_search, parse_for_clone, parse_for_completion, \
     parse_for_bug_fix
 from eval.bleu.google_bleu import avg_bleu
@@ -48,6 +48,7 @@ class CodeDataset(Dataset):
 
         # load pre-training dataset
         if self.mode == 'pre_train':
+            set_args(args=args)
             self.paths, self.languages, self.sources, self.codes, self.asts, self.names, self.codes_wo_name, \
                 self.names_wo_name, self.only_names, self.docs = load_dataset_from_dir(dataset_dir=self.dataset_dir)
             self.size = len(self.codes)
@@ -263,7 +264,15 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
     """
     name = '.'.join([sub_name for sub_name in [mode, task, language, split] if sub_name is not None])
     if load_if_saved:
-        path = os.path.join(args.dataset_save_dir, f'{name}.pk')
+        path = os.path.join(args.dataset_save_dir, f'{name}.pk') # '../../dataset/dataset_saved/pre_train.pk'
+
+        # #######################################################################
+        # Updated it with an argument `remove_existing_saved_file`, myoungkyu song, 03/23/2024
+        if args.remove_existing_saved_file and os.path.exists(path):
+            logger.info(f'Removing the existing file: {path}')
+            os.remove(path)
+        # #######################################################################
+
         if os.path.exists(path) and os.path.isfile(path):
             logger.info(f'Trying to load saved binary pickle file from: {path}')
             with open(path, mode='rb') as f:

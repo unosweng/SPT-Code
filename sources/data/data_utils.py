@@ -215,8 +215,28 @@ def parse_json_file(file, lang):
     names = []
     codes_wo_name = []
     docs = []
+
+    # #######################################################################
+    # Updated to reduce the time to parse, myoungkyu song, 03/23/2024
+    if main_args.pre_train_parse_subset_ratio:
+        lines_to_extract = 0
+        line_counter = 0
+        total_lines = 0
+
+        with open(file, encoding='utf-8') as f:
+            total_lines = sum(1 for _ in f)
+            lines_to_extract = int(total_lines * main_args.pre_train_parse_subset_ratio)
+
+        logger.info('*' * 100)
+        logger.info(f'{lang} => The size of original pre_train set to parse: {total_lines}')
+        logger.info(f'{lang} => The size of trimmed pre-train set to parse: {lines_to_extract}')
+    # #######################################################################
+
     with open(file, encoding='utf-8') as f:
         for line in f.readlines():
+            if line_counter > lines_to_extract:
+                break
+            line_counter += 1
             data = json.loads(line.strip())
             name = trim_method_name(data['func_name'])
             source = data['code'].strip()
@@ -302,6 +322,11 @@ def load_pre_train_dataset(file, lang):
         sources, codes, names, codes_wo_name, docs = parse_json_file(file, lang=lang)
         return sources, codes, names, codes_wo_name, docs
 
+main_args = None
+
+def set_args(args):
+    global main_args
+    main_args = args
 
 def load_dataset_from_dir(dataset_dir):
     """
