@@ -8,11 +8,16 @@
             "name": "Python Debugger: Current File with Arguments",
             "type": "debugpy",
             "request": "launch",
+            // example 1
+            // "cwd": "${workspaceFolder}/spt-code/examples",
+            // "program": "${workspaceFolder}/spt-code/examples/ex_custom_classifier.py",
+            // 
+            // main.py
+            "cwd": "${workspaceFolder}/spt-code/sources",
             "program": "${workspaceFolder}/spt-code/sources/main.py",
             "console": "integratedTerminal",
-            "args": "--do-pre-train --pre-train-tasks mass --batch-size 16 --eval-batch-size 16 --cuda-visible-devices 0 --fp16 --model-name pre_train --pre-train-subset-ratio 0.001 --n-epoch 1 --n-epoch-pre-train 1",
+            "args": "--do-pre-train --pre-train-tasks mass --batch-size 16 --eval-batch-size 32 --cuda-visible-devices 0 --fp16 --model-name pre_train --pre-train-subset-ratio 0.001 --pre-train-parse-subset-ratio 0.1 --train-subset-ratio 0.001 --n-epoch 1 --n-epoch-pre-train 1 --remove-existing-saved-file",
             // --n-epoch-pre-train was added to reduce running time.
-            "cwd": "${workspaceFolder}/spt-code/sources"
         },
         {
             "name": "Python Debugger: Python File",
