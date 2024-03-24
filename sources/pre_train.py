@@ -55,11 +55,26 @@ def pre_train(args,
     dataset = init_dataset(args=args, mode=enums.TRAINING_MODE_PRE_TRAIN)
     logger.info(f'The size of pre_training set: {len(dataset)}')
     if args.pre_train_subset_ratio:
-        dataset = dataset.subset(args.pre_train_subset_ratio)
         logger.info(f'The pre-train dataset is trimmed to subset due to the argument: '
                     f'train_subset_ratio={args.pre_train_subset_ratio}')
+        dataset = dataset.subset(args.pre_train_subset_ratio)
         logger.info('The size of trimmed pre-train set: {}'.format(len(dataset)))
+        # ######################################################
+        # Updated for bug-fix, myoungkyu song, 03/23/2024
+        """
+        if isinstance(dataset, torch.utils.data.Subset):
+            logger.info('The size of trimmed pre-train set (dataset.dataset): {}'.format(len(dataset.dataset)))
+            dataset = dataset.dataset
+        """
+        logger.info('The size of trimmed pre-train set: {}'.format(len(dataset)))
+
     logger.info('Datasets loaded and parsed successfully')
+
+    # ##################################################
+    # Edited to force to initialize vocab, myoungkyu song, 03/23/2024
+    if trained_vocab == 'None':
+        trained_vocab = None
+    # ##################################################
 
     # --------------------------------------------------
     # vocabs

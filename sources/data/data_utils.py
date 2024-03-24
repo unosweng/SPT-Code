@@ -227,9 +227,13 @@ def parse_json_file(file, lang):
             total_lines = sum(1 for _ in f)
             lines_to_extract = int(total_lines * main_args.pre_train_parse_subset_ratio)
 
+        if total_lines > 10_000:
+            lines_to_extract = int(lines_to_extract * main_args.pre_train_parse_subset_ratio)
+        if total_lines > 100_000:
+            lines_to_extract = int(lines_to_extract * main_args.pre_train_parse_subset_ratio)
+
         logger.info('*' * 100)
-        logger.info(f'{lang} => The size of original pre_train set to parse: {total_lines}')
-        logger.info(f'{lang} => The size of trimmed pre-train set to parse: {lines_to_extract}')
+        logger.info(f'{lang} => The size of trimmed / original pre_train set to parse: {lines_to_extract} / {total_lines}')
     # #######################################################################
 
     with open(file, encoding='utf-8') as f:
