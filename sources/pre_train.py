@@ -56,7 +56,7 @@ def pre_train(args,
     logger.info(f'The size of pre_training set: {len(dataset)}')
     if args.pre_train_subset_ratio:
         logger.info(f'The pre-train dataset is trimmed to subset due to the argument: '
-                    f'train_subset_ratio={args.pre_train_subset_ratio}')
+                    f'pre_train_subset_ratio={args.pre_train_subset_ratio}')
         dataset = dataset.subset(args.pre_train_subset_ratio)
         logger.info('The size of trimmed pre-train set: {}'.format(len(dataset)))
         # ######################################################
