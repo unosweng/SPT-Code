@@ -104,7 +104,7 @@ class RuntimeArguments:
 
     remove_existing_saved_file: str = field(
         default=None,
-        metadata={'help': 'Whether to remove an existing saved file (../../dataset/dataset_saved/pre_train.pk)'}
+        metadata={'help': 'Whether to remove an existing saved file (fine_tune:pre_train)'}
     )
 
 

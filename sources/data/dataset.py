@@ -269,7 +269,10 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
 
         # #######################################################################
         # Updated it with an argument `remove_existing_saved_file`, myoungkyu song, 03/23/2024
-        if ('fine_tune' in args.remove_existing_saved_file) and ('fine_tune' in path) and os.path.exists(path):
+        if os.path.exists(path) and ('fine_tune' in args.remove_existing_saved_file) and ('fine_tune' in path):
+            logger.info(f'Removing the existing file: {path}')
+            os.remove(path)
+        if os.path.exists(path) and ('pre_train' in args.remove_existing_saved_file) and ('pre_train' in path):
             logger.info(f'Removing the existing file: {path}')
             os.remove(path)
         # #######################################################################
