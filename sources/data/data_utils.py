@@ -32,6 +32,12 @@ MAPPING_LANG_LEXER = {
     enums.LANG_RUBY: RubyTokenizer()
 }
 
+main_args = None
+
+def set_args(args):
+    global main_args
+    main_args = args
+
 
 def load_eval_lines(path):
     """
@@ -326,11 +332,6 @@ def load_pre_train_dataset(file, lang):
         sources, codes, names, codes_wo_name, docs = parse_json_file(file, lang=lang)
         return sources, codes, names, codes_wo_name, docs
 
-main_args = None
-
-def set_args(args):
-    global main_args
-    main_args = args
 
 def load_dataset_from_dir(dataset_dir):
     """
