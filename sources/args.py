@@ -103,9 +103,8 @@ class RuntimeArguments:
     )
 
     remove_existing_saved_file: str = field(
-        default='../../dataset/dataset_saved/pre_train.pk',
-        metadata={'action': 'store_true',
-            'help': 'Whether to remove an existing saved file'}
+        default=None,
+        metadata={'help': 'Whether to remove an existing saved file (../../dataset/dataset_saved/pre_train.pk)'}
     )
 
 
@@ -128,7 +127,7 @@ class DatasetArguments:
         metadata={'help': 'Ratio of pre-train subset'}
     )
 
-    pre_train_parse_subset_ratio: float = field(
+    parse_subset_ratio: float = field(
         default=None,
         metadata={'help': 'Ratio of pre-train subset to parse'}
     )

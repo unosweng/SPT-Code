@@ -103,6 +103,7 @@ class CodeDataset(Dataset):
                 self.paths['file'] = os.path.join(self.dataset_dir, f'{split}.jsonl')
 
                 if split == 'codebase':
+                    set_args(args=args) # Added to pass args, myoungkyu song, 03/24/2024
                     self.urls, self.codes, self.asts, self.names = parse_for_search(dataset_dir=self.dataset_dir,
                                                                                     lang=language,
                                                                                     split=split)
@@ -268,7 +269,7 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
 
         # #######################################################################
         # Updated it with an argument `remove_existing_saved_file`, myoungkyu song, 03/23/2024
-        if args.remove_existing_saved_file and os.path.exists(path):
+        if ('fine_tune' in args.remove_existing_saved_file) and ('fine_tune' in path) and os.path.exists(path):
             logger.info(f'Removing the existing file: {path}')
             os.remove(path)
         # #######################################################################

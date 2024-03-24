@@ -218,19 +218,19 @@ def parse_json_file(file, lang):
 
     # #######################################################################
     # Updated to reduce the time to parse, myoungkyu song, 03/23/2024
-    if main_args.pre_train_parse_subset_ratio:
+    if main_args.parse_subset_ratio:
         lines_to_extract = 0
         line_counter = 0
         total_lines = 0
 
         with open(file, encoding='utf-8') as f:
             total_lines = sum(1 for _ in f)
-            lines_to_extract = int(total_lines * main_args.pre_train_parse_subset_ratio)
+            lines_to_extract = int(total_lines * main_args.parse_subset_ratio)
 
-        if total_lines > 10_000:
-            lines_to_extract = int(lines_to_extract * main_args.pre_train_parse_subset_ratio)
+        # if total_lines > 10_000:
+        #     lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
         if total_lines > 100_000:
-            lines_to_extract = int(lines_to_extract * main_args.pre_train_parse_subset_ratio)
+            lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
 
         logger.info('*' * 100)
         logger.info(f'{lang} => The size of trimmed / original pre_train set to parse: {lines_to_extract} / {total_lines}')
@@ -751,11 +751,34 @@ def parse_for_search(dataset_dir, lang, split):
     nls = []
 
     print(f"Parsing {split} dataset")
-
     path = os.path.join(dataset_dir, f'{split}.jsonl')
+
+    # #######################################################################
+    # Updated to reduce the time to parse, myoungkyu song, 03/23/2024
+    if main_args.parse_subset_ratio:
+        lines_to_extract = 0
+        line_counter = 0
+        total_lines = 0
+
+        with open(path, encoding='utf-8') as f:
+            total_lines = sum(1 for _ in f)
+            lines_to_extract = int(total_lines * main_args.parse_subset_ratio)
+
+        if total_lines > 10_000:
+            lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
+        if total_lines > 100_000:
+            lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
+
+        logger.info('*' * 100)
+        logger.info(f'{lang} => The size of trimmed / original fine tunning {split} set to parse: {lines_to_extract} / {total_lines}')
+    # #######################################################################
+
     with open(path, encoding='utf-8') as f:
         logger.info(f'  File: {path}')
         for line in tqdm(f.readlines()):
+            if line_counter > lines_to_extract:
+                break
+            line_counter += 1
             data = json.loads(line.strip())
             if split in ['train', 'valid', 'test']:
                 if 'docstring' not in data:
