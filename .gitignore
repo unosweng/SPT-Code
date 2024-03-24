@@ -152,3 +152,6 @@ sources/data/asts/vendor/tree-sitter-ruby
 
 # torch saving file
 *.pt
+
+# mac
+.DS_Store
