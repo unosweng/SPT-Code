@@ -107,6 +107,11 @@ class RuntimeArguments:
         metadata={'help': 'Whether to remove an existing saved file (fine_tune:pre_train)'}
     )
 
+    copy_existing_saved_file: str = field(
+        default=None,
+        metadata={'help': 'Copy an existing saved file (pre_train_org)'}
+    )
+
 
 @dataclass
 class DatasetArguments:

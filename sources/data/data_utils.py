@@ -244,9 +244,11 @@ def parse_json_file(file, lang):
 
     with open(file, encoding='utf-8') as f:
         for line in f.readlines():
-            if line_counter > lines_to_extract:
-                break
-            line_counter += 1
+            if main_args.parse_subset_ratio:
+                if line_counter > lines_to_extract:
+                    break
+                line_counter += 1
+
             data = json.loads(line.strip())
             name = trim_method_name(data['func_name'])
             source = data['code'].strip()
@@ -777,9 +779,11 @@ def parse_for_search(dataset_dir, lang, split):
     with open(path, encoding='utf-8') as f:
         logger.info(f'  File: {path}')
         for line in tqdm(f.readlines()):
-            if line_counter > lines_to_extract:
-                break
-            line_counter += 1
+            if main_args.parse_subset_ratio:
+                if line_counter > lines_to_extract:
+                    break
+                line_counter += 1
+
             data = json.loads(line.strip())
             if split in ['train', 'valid', 'test']:
                 if 'docstring' not in data:

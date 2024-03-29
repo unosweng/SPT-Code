@@ -165,7 +165,7 @@ def pre_train(args,
         if task == enums.TASK_CODE_AST_PREDICTION:
             # set model mode
             logger.info('-' * 100)
-            model.set_model_mode(enums.MODEL_MODE_CLS)
+            model.set_model_mode(enums.MODEL_MODE_GEN) # model.set_model_mode(enums.MODEL_MODE_CLS)
             # --------------------------------------------------
             # trainer
             # --------------------------------------------------

@@ -5,7 +5,7 @@ import os
 import random
 import logging
 import pickle
-import random
+import shutil
 
 import enums
 from .data_utils import load_dataset_from_dir, set_args, \
@@ -159,6 +159,7 @@ class CodeDataset(Dataset):
     def __getitem__(self, index):
         # cap
         if self.task == enums.TASK_CODE_AST_PREDICTION:
+            org_ast = self.asts[index]
             is_ast = random.random() < 0.5
             if is_ast:
                 return self.codes[index], self.asts[index], self.names[index], 1
@@ -266,6 +267,7 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
     name = '.'.join([sub_name for sub_name in [mode, task, language, split] if sub_name is not None])
     if load_if_saved:
         path = os.path.join(args.dataset_save_dir, f'{name}.pk') # '../../dataset/dataset_saved/pre_train.pk'
+        path_org = os.path.join(args.dataset_save_dir, f'{name}_org.pk') # '../../dataset/dataset_saved/pre_train_org.pk'
 
         # #######################################################################
         # Updated it with an argument `remove_existing_saved_file`, myoungkyu song, 03/23/2024
@@ -275,6 +277,10 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
         if os.path.exists(path) and ('pre_train' in args.remove_existing_saved_file) and ('pre_train' in path):
             logger.info(f'Removing the existing file: {path}')
             os.remove(path)
+        if os.path.exists(path_org) and ('pre_train_org' in args.copy_existing_saved_file) and ('pre_train' in path):
+            logger.info(f'Copying the existing file: {path_org}')
+            shutil.copy(path_org, path)
+            
         # #######################################################################
 
         if os.path.exists(path) and os.path.isfile(path):
