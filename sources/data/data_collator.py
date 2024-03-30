@@ -43,7 +43,9 @@ def collate_fn(batch, args, task, code_vocab, nl_vocab, ast_vocab):
             no_ast=args.no_ast,
             no_nl=args.no_nl
         )
-        model_inputs['labels'] = torch.tensor(is_ast, dtype=torch.long)
+        # Updated to add an extra dimension to model_inputs['labels'], myoungkyu song, 3/30
+        # model_inputs['labels'] = torch.tensor(is_ast, dtype=torch.long)
+        model_inputs['labels'] = torch.tensor(is_ast, dtype=torch.long).unsqueeze(-1)
     # mass
     elif task == enums.TASK_MASS:
 
