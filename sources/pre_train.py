@@ -165,12 +165,17 @@ def pre_train(args,
         if task == enums.TASK_CODE_AST_PREDICTION:
             # set model mode
             logger.info('-' * 100)
+            # Updated to use 'GEN' instead of 'CLS', myoungkyu song, 3/29/2024
             model.set_model_mode(enums.MODEL_MODE_GEN) # model.set_model_mode(enums.MODEL_MODE_CLS)
             # --------------------------------------------------
             # trainer
             # --------------------------------------------------
             logger.info('-' * 100)
             logger.info('Initializing the running configurations')
+            # Updated n_epoch to reduce training time, myoungkyu song, 3/20/2024
+            #   File "/.../envs/spt-code/lib/python3.8/site-packages/transformers/trainer_pt_utils.py", line 510, in __call__
+            #     nll_loss = log_probs.gather(dim=-1, index=labels)
+            # RuntimeError: Index tensor must have the same number of dimensions as input tensor
             training_args = TrainingArguments(output_dir=os.path.join(args.pre_train_output_root, task),
                                               overwrite_output_dir=True,
                                               do_train=True,
@@ -179,7 +184,7 @@ def pre_train(args,
                                               learning_rate=args.learning_rate,
                                               weight_decay=args.lr_decay_rate,
                                               max_grad_norm=args.grad_clipping_norm,
-                                              num_train_epochs=10,
+                                              num_train_epochs=args.n_epoch_pre_train,
                                               lr_scheduler_type=SchedulerType.LINEAR,
                                               warmup_steps=args.warmup_steps,
                                               logging_dir=os.path.join(args.tensor_board_root, task),
@@ -230,6 +235,7 @@ def pre_train(args,
             # --------------------------------------------------
             # trainer
             # --------------------------------------------------
+            # Updated n_epoch to reduce training time, myoungkyu song, 3/20/2024
             logger.info('-' * 100)
             logger.info('Initializing the running configurations')
             training_args = Seq2SeqTrainingArguments(output_dir=os.path.join(args.pre_train_output_root, task),
