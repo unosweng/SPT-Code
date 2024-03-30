@@ -179,6 +179,49 @@ where the tokenizers are located or put it in `{dataset_root}/vocab_saved` (defa
 You may pre-train SPT-Code by yourself. We also provide pre-trained models available [here](https://1drv.ms/u/s!Aj4XBdlu8BS0geoV78e2KLC41sfasw?e=kfukTw).
 Extract and put it in a directory, then specific the argument `trained_model` like tokenizers before.
 
+## Updates for Code-AST Prediction (CAP) Task
+
+Executing the `CAP` task caused a runtime error so that the following updates have been made to execute the `forward()` function in `bart.py` while avoiding the runtime exception by `ValueError` below.
+
+```shell
+# pre-training
+python main.py --do-pre-train --pre-train-tasks cap --batch-size 16 --eval-batch-size 32 --cuda-visible-devices 0 --fp16 --model-name pre_train --n-epoch 1 --n-epoch-pre-train 1 --remove-existing-saved-file fine_tune --copy-existing-saved-file pre_train_org
+```
+
+### pre_train.py
+```
+for task in tasks:
+    if task == enums.TASK_CODE_AST_PREDICTION:
+        + model.set_model_mode(enums.MODEL_MODE_GEN) 
+        - model.set_model_mode(enums.MODEL_MODE_CLS)  
+```
+
+### bart.py
+```
+class BartForClassificationAndGeneration(BartForConditionalGeneration):
+    def forward(self,...):
+        if self.mode == enums.MODEL_MODE_GEN:
+            return self.forward_gen(input_ids=input_ids,
+            ...
+        else:
+            raise ValueError # <- caused an runtime exception.
+```
+
+### bug-fix
+In addition, a new error introduced by the above edits was resolved by the following update in `data_collator.py`. Appending `unsqueeze(-1)` adds an extra dimension to `model_inputs['labels']`. Otherwise, the runtime error occurred due to dimension mismatch.
+
+### code update
+```
+- model_inputs['labels'] = torch.tensor(is_ast, dtype=torch.long)
++ model_inputs['labels'] = torch.tensor(is_ast, dtype=torch.long).unsqueeze(-1)
+```
+
+### bug
+```
+    nll_loss = log_probs.gather(dim=-1, index=labels)
+RuntimeError: Index tensor must have the same number of dimensions as input tensor
+```
+
 ## Runs
 
 Run `main.py` to start pre-train, fine-tune or test. 
