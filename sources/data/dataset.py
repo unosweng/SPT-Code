@@ -159,7 +159,14 @@ class CodeDataset(Dataset):
     def __getitem__(self, index):
         # cap
         if self.task == enums.TASK_CODE_AST_PREDICTION:
-            org_ast = self.asts[index]
+            # print(f'[DBG] index: {index}')
+            # org_ast = self.asts[index]
+            # if index == 184215:
+            #     self.keep_ast_index = 184215
+            # elif index == 59442:
+            #     print(f'[DBG] returned index: {self.keep_ast_index}')
+            #     return self.codes[self.keep_ast_index], self.asts[self.keep_ast_index], self.names[self.keep_ast_index], 1
+
             is_ast = random.random() < 0.5
             if is_ast:
                 return self.codes[index], self.asts[index], self.names[index], 1
@@ -170,12 +177,16 @@ class CodeDataset(Dataset):
                 return self.codes[index], other_ast, self.names[index], 0
         # mass
         elif self.task == enums.TASK_MASS:
+            # print(f'[DBG] index: {index}')
 
             code_tokens = self.codes[index].split()
             mask_len = int(self.args.mass_mask_ratio * len(code_tokens))
             mask_start = random.randint(0, len(code_tokens) - mask_len)
             mask_tokens = code_tokens[mask_start: mask_start + mask_len]
             input_tokens = code_tokens[:mask_start] + [Vocab.MSK_TOKEN] + code_tokens[mask_start + mask_len:]
+            # print(f'[DBG] code {code_tokens}')
+            # print(f'[DBG] input {input_tokens}')
+            # print(f'[DBG] mask {mask_tokens}')
             return ' '.join(input_tokens), self.asts[index], self.names[index], ' '.join(mask_tokens)
         # mnp
         elif self.task == enums.TASK_METHOD_NAME_PREDICTION:
@@ -277,7 +288,7 @@ def init_dataset(args, mode, task=None, language=None, split=None, clone_mapping
         if os.path.exists(path) and ('pre_train' in args.remove_existing_saved_file) and ('pre_train' in path):
             logger.info(f'Removing the existing file: {path}')
             os.remove(path)
-        if os.path.exists(path_org) and ('pre_train_org' in args.copy_existing_saved_file) and ('pre_train' in path):
+        if os.path.exists(path_org) and (args.copy_existing_saved_file is not None and 'pre_train_org' in args.copy_existing_saved_file) and ('pre_train' in path):
             logger.info(f'Copying the existing file: {path_org}')
             shutil.copy(path_org, path)
             
