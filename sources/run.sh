@@ -14,3 +14,4 @@ nohup python main.py --do-pre-train --pre-train-tasks cap,mass,mng --batch-size 
 # --copy-existing-saved-file pre_train_org
 # --train-subset-ratio 0.001
 # --n-epoch-pre-train was added to reduce running time.
+# The authors found that better results can be achieved by first pre-training CAP for 10 epochs, then MASS for 30 epochs, and eventually MNG for 30 epochs.
