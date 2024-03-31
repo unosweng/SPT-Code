@@ -137,6 +137,7 @@ class CodeDataset(Dataset):
                 target_path = os.path.join(self.dataset_dir, f'data.TargetType.seq.{split}.target.txt')
                 self.paths['source'] = source_path
                 self.paths['target'] = target_path
+                set_args(args=args) # Added to pass args, myoungkyu song, 03/31/2024
                 self.codes, self.asts, self.names, self.targets = parse_for_completion(source_path=source_path,
                                                                                        target_path=target_path)
                 assert len(self.codes) == len(self.asts) == len(self.names) == len(self.targets)

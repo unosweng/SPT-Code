@@ -779,7 +779,7 @@ def parse_for_search(dataset_dir, lang, split):
     with open(path, encoding='utf-8') as f:
         logger.info(f'  File: {path}')
         for line in tqdm(f.readlines()):
-            if main_args.parse_subset_ratio:
+            if main_args.parse_subset_ratio: # myoungkyu song, 03/23/2024
                 if line_counter > lines_to_extract:
                     break
                 line_counter += 1
@@ -949,12 +949,32 @@ def parse_for_completion(source_path, target_path):
     target_lines = load_lines(target_path)
     assert len(source_lines) == len(target_lines)
 
+    # #######################################################################
+    # Updated to reduce the time to parse, myoungkyu song, 03/31/2024
+    if main_args.parse_subset_ratio:
+        line_counter = 0
+        lines_to_extract = int(len(source_lines) * main_args.parse_subset_ratio)
+
+        if len(source_lines) > 10_000:
+            lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
+        if len(source_lines) > 100_000:
+            lines_to_extract = int(lines_to_extract * main_args.parse_subset_ratio)
+
+        logger.info('*' * 100)
+        logger.info(f'The size of trimmed / original fine tunning completion set to parse: {lines_to_extract} / {len(source_lines)}')
+    # #######################################################################
+
     codes = []
     asts = []
     names = []
     targets = []
     for source, target in tqdm(zip(source_lines, target_lines), desc='Parsing', total=len(source_lines)):
         try:
+            if main_args.parse_subset_ratio: # myoungkyu song, 03/31/2024
+                if line_counter > lines_to_extract:
+                    break
+                line_counter += 1
+
             source = restore_source(source)
             target = restore_source(target)
             ast, name = generate_single_ast_nl(source=source, lang=enums.LANG_JAVA)
