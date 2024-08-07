@@ -1,0 +1,7 @@
+# Tutorial
+# https://huggingface.co/learn/nlp-course/chapter7/3?fw=pt
+
+# Running the example, train_mlm.py
+#
+# accelerate env;
+# accelerate launch --multi_gpu --num_processes=${NGPU} train_mlm.py -train ${TRAIN} -test ${TEST} -ngpu ${NGPU} -epoch ${EPOCH} -logfile ${LOGFILE}"
