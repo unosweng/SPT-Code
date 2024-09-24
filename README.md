@@ -102,7 +102,8 @@ Edit the file scanner.c as follows.
 
 Fixed an error on tree-sitter due to the incompatible version between 'tree-sitter' and 'tree-sitter-python'. (The error occurred at `parser.set_language(LANGUAGE[lang])` in a function `parse_ast` in `ast_parser.py`. A test file `test_ast_parser.py` has been used to fix this bug.)
 ```
-pip install --upgrade tree-sitter
+# use the version 0.21.0 of tree-sitter.
+# pip install --upgrade tree-sitter
 ```
 
 ## Directory Structure with Code and Data
