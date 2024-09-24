@@ -55,8 +55,9 @@ tree_sitter==0.19.0
 antlr4-python3-runtime==4.9.2
 ```
 ```
-pip install tree_sitter==0.19.0
-pip install --upgrade tree-sitter
+# pip install tree_sitter==0.19.0
+# pip install --upgrade tree-sitter
+pip install tree_sitter==0.21.0
 pip install antlr4-python3-runtime==4.9.2
 ```
 
